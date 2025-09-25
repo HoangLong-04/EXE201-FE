@@ -5,8 +5,8 @@ import { Outlet } from "react-router";
 
 function UserLayout() {
   return (
-    <div>
-      <header>
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-99">
         <Navbar />
       </header>
       <section>

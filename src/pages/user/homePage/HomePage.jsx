@@ -1,12 +1,23 @@
-import React from "react";
 import Navbar from "../../../components/navbar/Navbar";
 import Introduction from "../../../components/introduction/Introduction";
 import Film from "../../../components/film/Film";
 import Home from "../../../components/home/Home";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useNavigate } from "react-router";
 
 function HomePage() {
+  const navigate = useNavigate();
   return (
     <div>
+      <div
+        onClick={() => navigate("/user/addProject")}
+        className="bg-black sticky rounded-4xl top-[89%] left-[89%] p-2 z-9 text-white w-fit flex justify-center items-center gap-2 cursor-pointer hover:bg-amber-300 hover:text-black transition"
+      >
+        <p>
+          <AddCircleOutlineIcon />
+        </p>
+        <p>Thêm dự án</p>
+      </div>
       <section className="mt-[8rem]" id="home">
         <Home />
       </section>
