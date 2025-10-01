@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://68c40e9f81ff90c8e61b1479.mockapi.io/EXE201";
 
-const publictApi = axios.create({
+const publicApi = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
@@ -20,4 +20,4 @@ privateApi.interceptors.request.use((config) => {
   return config;
 });
 
-export const apiConfig = { publictApi, privateApi };
+export const apiConfig = { publicApi, privateApi };

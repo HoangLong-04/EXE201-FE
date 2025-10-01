@@ -1,6 +1,6 @@
 import React from "react";
 
-function FilmCard({ image, title, fundRate }) {
+function ProjectCard({ image, title, fundRate, category }) {
   return (
     <div className="rounded-3xl w-[35rem] h-[80dvh] overflow-hidden ">
       <div className="border-[12px] border-[rgb(246,243,232)] overflow-hidden rounded-3xl">
@@ -10,8 +10,13 @@ function FilmCard({ image, title, fundRate }) {
           alt="Film"
         />
       </div>
-      <div className="ml-[2rem]">
-        <p>{fundRate}% funded</p>
+      <div className="ml-[2rem] mt-1">
+        <div className="flex gap-5 items-center">
+          <p>{fundRate}% funded</p>
+          <p>-</p>
+          <p className="bg-amber-200 rounded-2xl py-1 px-3 font-semibold">{category}</p>
+        </div>
+
         <br />
         <p className="font-medium text-3xl hover:underline cursor-pointer">
           {title}
@@ -21,4 +26,4 @@ function FilmCard({ image, title, fundRate }) {
   );
 }
 
-export default FilmCard;
+export default ProjectCard;

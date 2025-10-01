@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
-import FilmCard from "./FilmCard";
 import { useEffect, useState } from "react";
 import PublicApi from "../../services/PublicApi";
+import ProjectCard from "../projectCard.jsx/ProjectCard";
 
 function Film() {
   const [filmList, setFilmList] = useState([]);
 
   const getFilmList = async () => {
     try {
-      const response = await PublicApi.getFilmList();
-      setFilmList(response.data);
+      const response = await PublicApi.getProjectList();
+      const films = response.data.filter((item) => item.category === "film");
+      setFilmList(films);
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +34,12 @@ function Film() {
               viewport={{ once: false, amount: 0.3 }}
               transition={{ type: "spring", stiffness: 200, damping: 30 }}
             >
-              <FilmCard image={f.image} title={f.title} fundRate={f.fundRate} />
+              <ProjectCard
+                image={f.image}
+                title={f.title}
+                fundRate={f.fundRate}
+                category={f.category}
+              />
             </motion.div>
           ))}
         </div>

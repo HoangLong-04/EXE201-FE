@@ -13,6 +13,7 @@ import AddProject from "./pages/user/addProject/AddProject";
 import ProfileLayout from "./layouts/profile_layout/ProfileLayout";
 import InfoPage from "./pages/user/infoPage/InfoPage";
 import PostPage from "./pages/user/postPage/PostPage";
+import ProjectDetail from "./pages/user/projectDetail/ProjectDetail";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
           {/* Private user */}
           <Route path="/" element={<UserLayout />}>
             <Route path="user/home" element={<HomePage />} />
-            <Route path="user/addProject" element={<AddProject />} />
+            <Route path="user/add-project" element={<AddProject />} />
+            <Route path="user/project-detail" element={<ProjectDetail />} />
           </Route>
           <Route path="/" element={<ProfileLayout />}>
             <Route path="profile/info" element={<InfoPage />} />

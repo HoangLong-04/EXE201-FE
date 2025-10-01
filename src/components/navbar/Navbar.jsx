@@ -21,7 +21,7 @@ function Navbar() {
       <div className="cursor-pointer" onClick={() => navigate("/user/home")}>
         <img width={200} height={200} src={Logo} alt="logo" />
       </div>
-      {!["/user/addProject", "/user/profile"].includes(location.pathname) ? (
+      {!["/user/add-project", "/user/profile"].includes(location.pathname) ? (
         <div className="flex gap-30 items-center bg-white/50 rounded-full p-3 h-[1,5rem]">
           {navbarItems.map((item) => (
             <Link

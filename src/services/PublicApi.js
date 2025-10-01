@@ -1,7 +1,7 @@
 import { apiConfig } from "./ApiConfig";
 
 const PublicApi = {
-    getFilmList: () => apiConfig.publictApi.get()
+    getProjectList: () => apiConfig.publicApi.get()
 }
 
 export default PublicApi

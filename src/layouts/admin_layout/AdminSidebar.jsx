@@ -24,7 +24,7 @@ function AdminSidebar() {
               hover:bg-amber-400 hover:text-white
               ${
                 location.pathname === item.path
-                  ? "bg-amber-500 text-white"
+                  ? "bg-black text-white"
                   : "text-gray-800"
               }
             `}
