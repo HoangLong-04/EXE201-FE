@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import HomeIcon from '@mui/icons-material/Home';
 
 function ProfileSidebar() {
+  const navigate = useNavigate()
   const location = useLocation();
   const navItems = [
     { path: "/profile/info", label: "Thông tin cá nhân" },
@@ -10,7 +11,7 @@ function ProfileSidebar() {
   ];
   return (
     <div className="bg-black flex flex-col items-center min-h-[100dvh] py-6 px-4 shadow-lg">
-      <div className="mb-8 flex justify-center items-center gap-2 cursor-pointer hover:-translate-y-0.5 transition ease-in-out duration-300">
+      <div onClick={() => navigate('/user/home')} className="mb-8 flex justify-center items-center gap-2 cursor-pointer hover:-translate-y-0.5 transition ease-in-out duration-300">
         <p><HomeIcon sx={{color: 'white'}} /></p>
         <p className="text-2xl text-white font-semibold">Trang chủ</p>
       </div>

@@ -16,7 +16,7 @@ function UserInfo({
         Thông tin cơ bản
       </div>
       <div className="p-10">
-        <div className="flex items-start gap-5 my-5">
+        <div className="flex items-center gap-5 my-5">
           <p>
             <img width={100} height={100} src={img} alt="" />
           </p>

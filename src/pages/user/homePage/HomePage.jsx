@@ -6,20 +6,58 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useNavigate } from "react-router";
 import Game from "../../../components/game/Game";
 import Design from "../../../components/design/Design";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function HomePage() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   return (
     <div>
-      <div
-        onClick={() => navigate("/user/add-project")}
-        className="bg-black sticky rounded-4xl top-[89%] left-[89%] p-2 z-9 text-white w-fit flex justify-center items-center gap-2 cursor-pointer hover:bg-amber-300 hover:text-black transition"
+      <div className="fixed bottom-25 right-6 z-50 flex flex-col items-end gap-3">
+      {/* Nút mũi tên toggle */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="bg-black text-white rounded-full p-3 cursor-pointer shadow-lg hover:bg-gray-700 transition-all"
       >
-        <p>
+        {open ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+      </button>
+
+      {/* Cụm nút trượt ra */}
+      <div
+        className={`flex flex-col items-end gap-3 transition-all duration-500 ease-in-out transform ${
+          open ? "translate-x-0 opacity-100" : "translate-x-24 opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Nút Ủng hộ web */}
+        <button
+          onClick={() => navigate("/donate-web")}
+          className="relative cursor-pointer inline-flex items-center justify-center px-6 py-3 font-semibold text-white 
+                     bg-gradient-to-r from-green-500 to-green-700 rounded-full shadow-lg overflow-hidden 
+                     transition-all duration-300 ease-out group active:scale-95 whitespace-nowrap"
+        >
+          <span
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent 
+                     translate-x-[-100%] group-hover:translate-x-[100%] 
+                     transition-transform duration-700 ease-in-out pointer-events-none"
+          ></span>
+          <span className="relative z-10 flex items-center">
+            <span className="ml-1">Ủng hộ web</span>
+          </span>
+        </button>
+
+        {/* Nút Thêm dự án */}
+        <div
+          onClick={() => navigate("/user/add-project")}
+          className="bg-black rounded-full px-5 py-3 text-white flex items-center gap-2 cursor-pointer 
+               hover:bg-amber-300 hover:text-black transition-all duration-300 shadow-lg"
+        >
           <AddCircleOutlineIcon />
-        </p>
-        <p>Thêm dự án</p>
+          <p>Thêm dự án</p>
+        </div>
       </div>
+    </div>
+
       <section className="mt-[8rem]" id="home">
         <Home />
       </section>

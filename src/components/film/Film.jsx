@@ -4,29 +4,35 @@ import PublicApi from "../../services/PublicApi";
 import ProjectCard from "../projectCard.jsx/ProjectCard";
 
 function Film() {
-  const [filmList, setFilmList] = useState([]);
-
-  const getFilmList = async () => {
-    try {
-      const response = await PublicApi.getProjectList();
-      const films = response.data.filter((item) => item.category === "film");
-      setFilmList(films);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [project, setProject] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
-    getFilmList();
-  }, []);
+    const getProject = async () => {
+      try {
+        const response = await PublicApi.getProjectList({ page, pageSize });
+        const film = response.data.projects.filter((item) => item.categoryName === 'Film')
+        setProject(film);
+
+        setTotalPage(response.totalPages);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProject();
+  }, [page, pageSize]);
+
   return (
     <div className="p-[2rem]">
       <div className="bg-[rgb(254,250,231)] p-[5rem]">
         <p className="text-center font-bold text-5xl mb-[5rem]">
           Các dự án về mảng phim
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {filmList.map((f) => (
+        {project.length === 0 ? <p className="text-center text-gray-500">Chưa có dự án nào</p> : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {project?.map((f) => (
             <motion.div
               key={f.id}
               initial={{ scale: 0.85, opacity: 0 }}
@@ -35,14 +41,18 @@ function Film() {
               transition={{ type: "spring", stiffness: 200, damping: 30 }}
             >
               <ProjectCard
-                image={f.image}
+                id={f.id}
+                mediaCoverUrl={f.mediaCoverUrl}
                 title={f.title}
-                fundRate={f.fundRate}
-                category={f.category}
+                currentAmount={f.currentAmount}
+                goal={f.goal}
+                category={f.categoryName}
               />
             </motion.div>
           ))}
         </div>
+        )}
+        
       </div>
     </div>
   );

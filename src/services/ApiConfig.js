@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://68c40e9f81ff90c8e61b1479.mockapi.io/EXE201";
+const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
 const publicApi = axios.create({
   baseURL: BASE_URL,
@@ -12,12 +12,22 @@ export const privateApi = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-privateApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+privateApi.interceptors.request.use(
+  (config) => {
+    try {
+      const rawUser = sessionStorage.getItem("user");
+      if (rawUser) {
+        const user = JSON.parse(rawUser);
+        if (user?.token) {
+          config.headers.Authorization = `Bearer ${user.token}`;
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing user from localStorage:", error);
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export const apiConfig = { publicApi, privateApi };

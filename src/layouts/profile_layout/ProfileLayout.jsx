@@ -9,7 +9,7 @@ function ProfileLayout() {
       </aside>
 
       <main className="bg-gray-50 flex-1">
-        <div className="p-4 shadow-lg sticky top-0">Xin chào, Long</div>
+        <div className="p-4 shadow-lg sticky top-0 z-9">Xin chào, Long</div>
         <Outlet />
       </main>
     </div>
