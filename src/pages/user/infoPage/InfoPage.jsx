@@ -1,6 +1,6 @@
 import UserInfo from "../../../components/userInfo/UserInfo";
 import Logo from "../../../assets/logo-exe.png";
-import { useAuth } from "../../../hooks/UseAuth";
+import { useAuth } from "../../../hooks/useAuth";
 
 function InfoPage() {
   const { user } = useAuth()
