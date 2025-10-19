@@ -23,14 +23,16 @@ function ProjectCard({
   }
 
   const slugify = (text) => {
-    return text
-      .normalize("NFD") // loại bỏ dấu tiếng Việt
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "") // bỏ ký tự đặc biệt
-      .trim()
-      .replace(/\s+/g, "-"); // thay khoảng trắng bằng dấu "-"
-  };
+  return text
+    .normalize("NFD") // loại bỏ dấu tiếng Việt
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // bỏ ký tự đặc biệt trừ dấu '-'
+    .trim()
+    .replace(/\s+/g, "-") // thay khoảng trắng bằng '-'
+    .replace(/-+/g, "-"); // gộp các dấu '-' liền nhau thành 1
+};
+
   return (
     <div
       onClick={handleNavigate}

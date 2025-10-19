@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../paymentForm/PaymentForm";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function TierReward({
   title,
@@ -18,8 +19,10 @@ function TierReward({
 }) {
   const [clientSecret, setClientSecret] = useState(null);
   const [publishableKey, setPublishableKey] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const handleDonateTier = async () => {
+    setLoading(true);
     try {
       const response = await PrivateApi.donateProject(projectId, {
         rewardTierId: tierId,
@@ -30,6 +33,8 @@ function TierReward({
     } catch (error) {
       console.error(error);
       toast.error("Tạo yêu cầu thất bại");
+    } finally {
+      setLoading(false);
     }
   };
   if (clientSecret && publishableKey) {
@@ -92,10 +97,15 @@ function TierReward({
 
       {user.userProfile.fullName === creatorName ? null : (
         <button
+          disabled={loading}
           onClick={handleDonateTier}
-          className="mt-4 bg-pink-500 text-white font-medium py-2 rounded-full hover:bg-pink-600 transition cursor-pointer"
+          className="mt-4 bg-pink-500 text-white font-medium py-2 flex items-center justify-center rounded-full hover:bg-pink-600 transition cursor-pointer"
         >
-          Ủng hộ ngay
+          {loading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Ủng hộ ngay"
+          )}
         </button>
       )}
     </div>

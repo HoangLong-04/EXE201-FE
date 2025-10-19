@@ -4,6 +4,7 @@ import { uploadImageToCloudinary } from "../../../utils/uploadImage";
 import PrivateApi from "../../../services/PrivateApi";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAuth } from "../../../hooks/useAuth";
 
 function AddProject() {
   const [category, setCategory] = useState([]);
@@ -18,6 +19,7 @@ function AddProject() {
     categoryId: "",
     imageFile: null,
   });
+  const { user } = useAuth();
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -40,10 +42,13 @@ function AddProject() {
   };
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     setLoading(true);
-    if (
+    if (!user) {
+      toast.error("Hãy đăng nhập trước");
+      setLoading(false);
+      return;
+    } else if (
       !form.title ||
       !form.summary ||
       !form.description ||
@@ -56,6 +61,19 @@ function AddProject() {
       setLoading(false);
       return;
     }
+    // if (
+    //   !form.title ||
+    //   !form.summary ||
+    //   !form.description ||
+    //   !form.goal ||
+    //   !form.endAt ||
+    //   !form.categoryId ||
+    //   !form.imageFile
+    // ) {
+    //   toast.error("Hãy nhập đầy đủ thông tin");
+    //   setLoading(false);
+    //   return;
+    // }
     try {
       const imageUrl = await uploadImageToCloudinary(form.imageFile);
 
@@ -68,8 +86,7 @@ function AddProject() {
         categoryId: form.categoryId,
         mediaCoverUrl: imageUrl, // URL từ Cloudinary
       });
-      
-      
+
       console.log("Tạo dự án thành công:", response);
       toast.success("Tạo dự án thành công!");
     } catch (error) {

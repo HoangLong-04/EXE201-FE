@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 function Game() {
   const [project, setProject] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(4);
+  const [pageSize] = useState(50);
   const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
@@ -22,7 +22,6 @@ function Game() {
         console.log(error);
       }
     };
-
     getProject();
   }, [page, pageSize]);
   return (

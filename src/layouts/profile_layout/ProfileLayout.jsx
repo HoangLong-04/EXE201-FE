@@ -1,7 +1,9 @@
 import { Outlet } from "react-router";
 import ProfileSidebar from "./ProfileSidebar";
+import { useAuth } from "../../hooks/useAuth";
 
 function ProfileLayout() {
+  const { user } = useAuth()
   return (
     <div className="flex min-h-screen">
       <aside className="sticky top-0 left-0 w-[250px] h-screen">
@@ -9,7 +11,7 @@ function ProfileLayout() {
       </aside>
 
       <main className="bg-gray-50 flex-1">
-        <div className="p-4 shadow-lg sticky top-0 z-9">Xin chào, Long</div>
+        <div className="p-4 shadow-lg sticky top-0 z-9">Xin chào, {user.userProfile.fullName}</div>
         <Outlet />
       </main>
     </div>
