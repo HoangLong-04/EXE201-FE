@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function HomePage() {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <div>
       <div className="fixed bottom-25 right-6 z-50 flex flex-col items-end gap-3">
@@ -49,7 +49,7 @@ function HomePage() {
         {/* Nút Thêm dự án */}
         <div
           onClick={() => navigate("/user/add-project")}
-          className="bg-black rounded-full px-5 py-3 text-white flex items-center gap-2 cursor-pointer 
+          className="bg-black scale-105 rounded-full px-5 py-3 text-white flex items-center gap-2 cursor-pointer 
                hover:bg-amber-300 hover:text-black transition-all duration-300 shadow-lg"
         >
           <AddCircleOutlineIcon />
