@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
-function Table({ projects, currentPage, totalPages, onPageChange, onApprove, onEdit, onDelete }) {
+function Table({
+  projects,
+  currentPage,
+  totalPages,
+  onPageChange,
+  onApprove,
+  onReject,
+  onView,
+  loading,
+}) {
   return (
     <div className="bg-white shadow-md rounded-xl p-6 overflow-x-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Danh sách dự án chờ duyệt</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-700">
+        Danh sách dự án chờ duyệt
+      </h2>
 
       <table className="w-full text-left border-collapse">
         <thead>
@@ -30,23 +42,26 @@ function Table({ projects, currentPage, totalPages, onPageChange, onApprove, onE
                 </td>
                 <td className="py-3 px-4 text-center flex justify-center gap-2">
                   <button
+                    disabled={loading}
+                    onClick={() => onView(p.id)}
+                    className="bg-gray-500 text-white px-3 py-1 rounded-lg hover:bg-gray-600 transition cursor-pointer"
+                  >
+                    Xem
+                  </button>
+                  <button
+                    disabled={loading}
                     onClick={() => onApprove(p.id)}
                     className="bg-blue-500 cursor-pointer text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition"
                   >
                     Duyệt
                   </button>
-                  {/* <button
-                    onClick={() => onEdit(p.id)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition"
-                  >
-                    Sửa
-                  </button>
                   <button
-                    onClick={() => onDelete(p.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                    disabled={loading}
+                    onClick={() => onReject(p.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition cursor-pointer"
                   >
-                    Xóa
-                  </button> */}
+                    Từ chối
+                  </button>
                 </td>
               </tr>
             ))
@@ -82,6 +97,6 @@ function Table({ projects, currentPage, totalPages, onPageChange, onApprove, onE
       </div>
     </div>
   );
-};
+}
 
-export default Table
+export default Table;

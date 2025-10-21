@@ -10,6 +10,8 @@ const PrivateApi = {
     apiConfig.privateApi.get("api/Project/pending", { params }),
   approveProject: (id) =>
     apiConfig.privateApi.post(`api/admin/projects/${id}/approve`),
+  rejectProject: (id, note) =>
+    apiConfig.privateApi.post(`api/admin/projects/${id}/reject`, note),
   submitProject: (id) => apiConfig.privateApi.post(`api/Project/${id}/submit`),
   getPledge: (id, params) =>
     apiConfig.privateApi.get(`api/Project/${id}/pledges`, { params }),
@@ -24,7 +26,8 @@ const PrivateApi = {
     apiConfig.privateApi.post(`api/Project/${id}/media`, data),
   getMedia: (id) => apiConfig.privateApi.get(`api/Project/${id}/media`),
   getUserCount: () => apiConfig.privateApi.get("api/Accounts/count"),
-  getRevenue: () => apiConfig.privateApi.get('api/admin/donations/revenue')
+  getRevenue: () => apiConfig.privateApi.get("api/admin/donations/revenue"),
+  getDetailProjectAdmin: (id) => apiConfig.privateApi.get(`api/Project/${id}`),
 };
 
 export default PrivateApi;
