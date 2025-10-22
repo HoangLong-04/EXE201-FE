@@ -35,76 +35,86 @@ function PostPage() {
       <h2 className="text-center text-5xl my-10 font-semibold">
         Dự án của bạn
       </h2>
-      
-        <div className="flex justify-between items-center mb-3 ml-3">
-          <div>
-            <label className="mr-2 font-medium text-gray-600">
-              Trạng thái:
-            </label>
-            <select
-              className="border border-gray-300 rounded-md px-2 py-1"
-              value={status}
-              onChange={(e) => {
-                setStatus(e.target.value);
-                setPage(1);
-              }}
-            >
-              <option value="">Tất cả</option>
-              <option value="Draft">Bản nháp</option>
-              <option value="Submitted">Chờ duyệt</option>
-              <option value="Published">Công khai</option>
-            </select>
-          </div>
+
+      <div className="flex justify-between items-center mb-3 ml-3">
+        <div>
+          <label className="mr-2 font-medium text-gray-600">Trạng thái:</label>
+          <select
+            className="border border-gray-300 rounded-md px-2 py-1"
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">Tất cả</option>
+            <option value="Draft">Bản nháp</option>
+            <option value="Submitted">Chờ duyệt</option>
+            <option value="Published">Công khai</option>
+          </select>
         </div>
-      
+      </div>
 
       {loading ? (
         <div className="flex justify-center items-center">
           <CircularProgress />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          {project.length === 0 && (
-            <div className="text-gray-500 flex justify-center items-center col-span-2">
-              Bạn chưa có dự án nào
+        <div className="w-full px-4 py-8">
+          {project.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-xl text-gray-500">
+                  Chưa có dự án nào
+                </h3>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+              {project.map((p) => (
+                <div
+                  key={p.id}
+                  className="w-full max-w-sm animate-fadeIn"
+                  style={{
+                    animation: "fadeIn 0.5s ease-in-out",
+                  }}
+                >
+                  <ProjectCard
+                    currentAmount={p.currentAmount}
+                    goal={p.goal}
+                    mediaCoverUrl={p.mediaCoverUrl}
+                    title={p.title}
+                    category={p.categoryName}
+                    summary={p.summary}
+                  />
+                </div>
+              ))}
             </div>
           )}
-          {project?.map((p) => (
-            <div key={p.id} className="scale-90">
-              <ProjectCard
-                currentAmount={p.currentAmount}
-                goal={p.goal}
-                mediaCoverUrl={p.mediaCoverUrl}
-                title={p.title}
-                category={p.categoryName}
-              />
-            </div>
-          ))}
         </div>
       )}
 
-      {project.length === 0 ? null : 
-      <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
-        >
-          Prev
-        </button>
-        <span>
-          {page} / {totalPage}
-        </span>
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPage))}
-          disabled={page === totalPage}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
-        >
-          Next
-        </button>
-      </div>}
-
-      
+      {project.length === 0 ? null : (
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
+          >
+            Prev
+          </button>
+          <span>
+            {page} / {totalPage}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPage))}
+            disabled={page === totalPage}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

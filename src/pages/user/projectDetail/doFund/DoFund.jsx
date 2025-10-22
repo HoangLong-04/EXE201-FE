@@ -369,7 +369,7 @@ function DoFund({
                   value={form.amount}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 outline-none"
-                  min="50000"
+                  min="20000"
                 />
               </div>
 

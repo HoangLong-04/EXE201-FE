@@ -91,7 +91,7 @@ function AddProject() {
       toast.success("Tạo dự án thành công!");
     } catch (error) {
       console.error("Lỗi:", error);
-      toast.error("Tạo thất bại");
+      toast.error(error.message || "Tạo dự án thất bại");
     } finally {
       setLoading(false);
     }

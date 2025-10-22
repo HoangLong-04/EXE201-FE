@@ -18,7 +18,7 @@ import { X } from "lucide-react";
 function ProjectInfo({ img, desciption, title, summary, id, status }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ file: "", type: "video", sortOrder: "" });
+  const [form, setForm] = useState({ file: "", type: "video", sortOrder: 0 });
   const [media, setMedia] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("");
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -38,7 +38,9 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
 
   const handleResetField = () => {
     setOpen(false);
-    setForm({ file: "", type: "", sortOrder: "" });
+    setForm({ file: "", type: "", sortOrder: 0 });
+    console.log(form.sortOrder);
+    
     setPreviewUrl("");
   };
 
@@ -58,7 +60,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
     e.preventDefault();
     console.log(form);
 
-    if (!form.file || !form.type || !form.sortOrder) {
+    if (!form.file || !form.type) {
       toast.error("Thêm đầy đủ thông tin");
       return;
     }
@@ -67,7 +69,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
       await PrivateApi.addMedia(id, {
         url: mediaUrl,
         type: form.type,
-        sortOrder: form.sortOrder,
+        sortOrder: 0,
       });
       toast.success("Thêm thành công");
       fetchMedia();
@@ -88,7 +90,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
           <img
             className="rounded-2xl w-full h-[400px] object-cover shadow-md"
             src={img}
-            alt="Game project"
+            alt=""
           />
         </div>
 
@@ -253,7 +255,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
                 <option value="image">Ảnh</option>
               </select>
             </div>
-            <div>
+            {/* <div>
               <label className="block font-medium mb-1 text-gray-700">
                 Thứ tự hiển thị
               </label>
@@ -267,7 +269,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 outline-none"
                 placeholder="Thứ tự hiển thị"
               />
-            </div>
+            </div> */}
           </form>
         </DialogContent>
 
