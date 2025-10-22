@@ -33,22 +33,22 @@ function Game() {
         {project.length === 0 ? (
           <p className="text-center text-gray-500">Chưa có dự án nào</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {project?.map((g) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {project?.map((f) => (
               <motion.div
-                key={g.id}
+                key={f.id}
                 initial={{ scale: 0.85, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: false, amount: 0.3 }}
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
               >
                 <ProjectCard
-                  id={g.id}
-                  mediaCoverUrl={g.mediaCoverUrl}
-                  title={g.title}
-                  currentAmount={g.currentAmount}
-                  goal={g.goal}
-                  category={g.categoryName}
+                  id={f.id}
+                  mediaCoverUrl={f.mediaCoverUrl}
+                  title={f.title}
+                  currentAmount={f.currentAmount}
+                  goal={f.goal}
+                  category={f.categoryName}
                 />
               </motion.div>
             ))}
