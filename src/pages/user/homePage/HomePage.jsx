@@ -12,69 +12,79 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 function HomePage() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
-  return (
-    <div>
-      <div className="fixed bottom-25 right-6 z-50 flex flex-col items-end gap-3">
-      {/* Nút mũi tên toggle */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="bg-black text-white rounded-full p-3 cursor-pointer shadow-lg hover:bg-gray-700 transition-all"
-      >
-        {open ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-      </button>
 
-      {/* Cụm nút trượt ra */}
-      <div
-        className={`flex flex-col items-end gap-3 transition-all duration-500 ease-in-out transform ${
-          open ? "translate-x-0 opacity-100" : "translate-x-24 opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Nút Ủng hộ web */}
+  return (
+    <div className="min-h-screen">
+
+      <div className="fixed bottom-10 right-4 md:right-6 z-50 flex flex-col items-end gap-3 group">
+        
+
         <button
-          onClick={() => navigate("/donate-web")}
-          className="relative cursor-pointer inline-flex items-center justify-center px-6 py-3 font-semibold text-white 
-                     bg-gradient-to-r from-green-500 to-green-700 rounded-full shadow-lg overflow-hidden 
-                     transition-all duration-300 ease-out group active:scale-95 whitespace-nowrap"
+          onClick={() => setOpen(!open)}
+          className="bg-black text-white rounded-full p-3 cursor-pointer shadow-xl 
+                     hover:bg-gray-700 transition-all duration-200 active:scale-95"
+          aria-expanded={open}
+          aria-label={open ? "Đóng menu tiện ích" : "Mở menu tiện ích"}
         >
-          <span
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent 
-                     translate-x-[-100%] group-hover:translate-x-[100%] 
-                     transition-transform duration-700 ease-in-out pointer-events-none"
-          ></span>
-          <span className="relative z-10 flex items-center">
-            <span className="ml-1">Ủng hộ web</span>
-          </span>
+
+          {open ? <ChevronRight size={20} /> : <ChevronLeft size={20} />} 
         </button>
 
-        {/* Nút Thêm dự án */}
+
         <div
-          onClick={() => navigate("/user/add-project")}
-          className="bg-black scale-105 rounded-full px-5 py-3 text-white flex items-center gap-2 cursor-pointer 
-               hover:bg-amber-300 hover:text-black transition-all duration-300 shadow-lg"
+          className={`flex flex-col items-end gap-3 transition-all duration-300 ease-in-out origin-right
+            ${
+              open 
+                ? "translate-x-0 opacity-100 visible" 
+                : "translate-x-[150%] opacity-0 invisible"
+            }
+          `}
         >
-          <AddCircleOutlineIcon />
-          <p>Thêm dự án</p>
+          <button
+            onClick={() => navigate("/donate-web")}
+            className="relative cursor-pointer inline-flex items-center justify-center px-4 py-2 font-semibold text-white text-sm 
+                       bg-gradient-to-r from-green-500 to-green-700 rounded-full shadow-lg overflow-hidden 
+                       transition-all duration-300 ease-out group/donate active:scale-95 whitespace-nowrap min-w-[150px]"
+          >
+            <span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent 
+                        translate-x-[-100%] group-hover/donate:translate-x-[100%] 
+                        transition-transform duration-700 ease-in-out pointer-events-none"
+            ></span>
+            <span className="relative z-10 flex items-center">
+              <span className="ml-1">Ủng hộ web</span>
+            </span>
+          </button>
+
+          <div
+            onClick={() => navigate("/user/add-project")}
+            className="bg-black rounded-full px-4 py-2 text-white flex items-center gap-2 cursor-pointer text-sm 
+                       hover:bg-yellow-500 hover:text-black transition-all duration-300 shadow-lg 
+                       active:scale-95 min-w-[150px]"
+          >
+            <AddCircleOutlineIcon className="w-5 h-5"/>
+            <p>Thêm dự án</p>
+          </div>
         </div>
       </div>
-    </div>
-
-      <section className="mt-[8rem]" id="home">
+      
+      <section className="mt-16 md:mt-[8rem] px-4" id="home">
         <Home />
       </section>
 
-      <section className="mt-[2rem]" id="info">
+      <section className="mt-10 md:mt-16 px-4" id="info">
         <Introduction />
       </section>
 
-      <section className="mt-[2rem]" id="film">
+      <section className="mt-10 md:mt-16 px-4" id="film">
         <Film />
       </section>
 
-      <section className="mt-[2rem]" id="design">
+      <section className="mt-10 md:mt-16 px-4" id="design">
         <Design />
       </section>
 
-      <section className="mt-[2rem]" id="game">
+      <section className="mt-10 md:mt-16 px-4" id="game">
         <Game />
       </section>
     </div>

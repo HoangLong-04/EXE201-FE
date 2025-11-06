@@ -2,7 +2,14 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 
-function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summary }) {
+function ProjectCard({
+  mediaCoverUrl,
+  title,
+  category,
+  currentAmount,
+  goal,
+  summary,
+}) {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,6 +26,8 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
     return text
       .normalize("NFD") // loại bỏ dấu tiếng Việt
       .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d") // thay 'đ' thành 'd'
+      .replace(/Đ/g, "d")
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, "") // bỏ ký tự đặc biệt trừ dấu '-'
       .trim()
@@ -26,7 +35,10 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
       .replace(/-+/g, "-"); // gộp các dấu '-' liền nhau thành 1
   };
 
-  const progressPercentage = Math.min(Math.floor((currentAmount / goal) * 100), 100);
+  const progressPercentage = Math.min(
+    Math.floor((currentAmount / goal) * 100),
+    100
+  );
 
   return (
     <div
@@ -42,7 +54,7 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
         />
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+
         {/* Category Badge */}
         <div className="absolute top-4 right-4">
           <span className="inline-block bg-white/95 backdrop-blur-sm text-gray-800 text-sm font-semibold px-4 py-2 rounded-full shadow-md">
@@ -60,9 +72,7 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
 
         {/* Summary (optional) */}
         {summary && (
-          <p className="text-sm text-gray-600 line-clamp-2">
-            {summary}
-          </p>
+          <p className="text-sm text-gray-600 line-clamp-2">{summary}</p>
         )}
 
         {/* Progress Section */}
@@ -82,13 +92,13 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
           <div className="flex items-center justify-between text-sm">
             <div>
               <p className="text-2xl font-bold text-gray-900">
-                {currentAmount.toLocaleString('vi-VN')}₫
+                {currentAmount.toLocaleString("vi-VN")}₫
               </p>
               <p className="text-gray-500 text-xs">
-                raised of {goal.toLocaleString('vi-VN')}₫
+                raised of {goal.toLocaleString("vi-VN")}₫
               </p>
             </div>
-            
+
             <div className="text-right">
               <p className="text-2xl font-bold text-green-600">
                 {progressPercentage}%
@@ -97,7 +107,6 @@ function ProjectCard({ mediaCoverUrl, title, category, currentAmount, goal, summ
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Decorative corner accent */}

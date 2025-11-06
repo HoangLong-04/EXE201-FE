@@ -56,25 +56,6 @@ function Film() {
             ))}
           </div>
         )}
-        {/* <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          onClick={() => setPage(page - 1)}
-          disabled={page === 1}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          ← Trước
-        </button>
-        <span className="text-gray-700 font-medium">
-          Trang {page} / {totalPages}
-        </span>
-        <button
-          onClick={() => setPage(page + 1)}
-          disabled={page === totalPage}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Sau →
-        </button>
-      </div> */}
       </div>
     </div>
   );
