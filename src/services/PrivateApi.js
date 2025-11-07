@@ -19,7 +19,7 @@ const PrivateApi = {
     apiConfig.privateApi.post(`api/projects/${id}/tiers`, data),
   donateForWeb: (data) => apiConfig.privateApi.post("api/Donations", data),
   donateProject: (id, data) =>
-    apiConfig.privateApi.post(`api/projects/${id}/pledges`, data),
+    apiConfig.privateApi.post(`api/Pledges/projects/${id}/pledges`, data),
   getWebDonator: (params) =>
     apiConfig.privateApi.get("api/admin/donations", { params }),
   addMedia: (id, data) =>

@@ -28,7 +28,7 @@ function LoginPage() {
 
       toast.success("Đăng nhập thành công");
     } catch (error) {
-      toast.error("Đăng nhập thất bại");
+      toast.error(error.data || "Đăng nhập thất bại");
     } finally {
       setLoading(false);
     }

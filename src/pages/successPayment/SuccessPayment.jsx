@@ -1,90 +1,79 @@
-import { motion } from "framer-motion";
-import { CheckCircle2, Home, Gift } from "lucide-react";
+import Button from "@mui/material/Button";
+import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 
 function SuccessPayment() {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Lấy thông tin từ query hoặc state nếu bạn truyền lúc navigate
-  const amount = location.state?.amount || 0;
-  const message = location.state?.message || "Cảm ơn bạn đã ủng hộ 💚";
+  const query = new URLSearchParams(location.search);
+  const code = query.get("code");
+  const id = query.get("id");
+  const cancel = query.get("cancel");
+  const status = query.get("status");
+  const orderCode = query.get("orderCode");
+
+  const isPaid = status === "PAID" && code === "00" && cancel === "false";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-white px-6 py-10">
-      {/* Hiệu ứng vòng tròn */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 120, damping: 10 }}
-        className="bg-green-100 rounded-full p-6 mb-6 shadow-lg"
-      >
-        <CheckCircle2 className="text-green-600 w-20 h-20" />
-      </motion.div>
-
-      {/* Nội dung chính */}
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl font-bold text-green-700 mb-2 text-center"
-      >
-        Thanh toán thành công!
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="text-gray-600 text-center max-w-md mb-6"
-      >
-        {message}
-      </motion.p>
-
-      {/* Thông tin giao dịch */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="bg-white shadow-md rounded-2xl p-5 w-full max-w-md text-gray-700"
-      >
-        {/* <div className="flex justify-between py-2 border-b">
-          <span>Số tiền:</span>
-          <span className="font-semibold text-green-600">
-            {amount.toLocaleString("vi-VN")} ₫
-          </span>
-        </div> */}
-        <div className="flex justify-between py-2 border-b">
-          <span>Trạng thái:</span>
-          <span className="font-semibold text-green-600">Đã thanh toán</span>
-        </div>
-        <div className="flex justify-between py-2">
-          <span>Thời gian:</span>
-          <span>{new Date().toLocaleString("vi-VN")}</span>
-        </div>
-      </motion.div>
-
-      {/* Nút điều hướng */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="flex gap-4 mt-8"
-      >
-        <button
-          onClick={() => navigate("/")}
-          className="flex cursor-pointer items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-full font-medium shadow hover:bg-green-700 transition"
-        >
-          <Home size={18} /> Trang chủ
-        </button>
-
-        {/* <button
-          onClick={() => navigate("/projects")}
-          className="flex items-center gap-2 border border-green-600 text-green-700 px-5 py-2 rounded-full font-medium hover:bg-green-50 transition"
-        >
-          <Gift size={18} /> Xem dự án khác
-        </button> */}
-      </motion.div>
+    <div className="min-h-[100vh] flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full text-center">
+        {isPaid ? (
+          <>
+            <CheckCircle2 className="text-green-500 mx-auto w-20 h-20 mb-4" />
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              Thanh toán thành công!
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Cảm ơn bạn đã ủng hộ dự án ❤️
+            </p>
+            <div className="text-left bg-gray-50 rounded-lg p-4 text-sm mb-6">
+              <p>
+                <strong>Mã giao dịch:</strong> {id}
+              </p>
+              <p>
+                <strong>Mã đơn hàng:</strong> {orderCode}
+              </p>
+              <p>
+                <strong>Trạng thái:</strong>{" "}
+                <span className="text-green-600 font-medium">{status}</span>
+              </p>
+            </div>
+            <Button
+              className="w-full bg-green-500 hover:bg-green-600 text-white"
+              onClick={() => navigate("/")}
+            >
+              Quay lại trang chủ
+            </Button>
+          </>
+        ) : cancel === "true" ? (
+          <>
+            <XCircle className="text-red-500 mx-auto w-20 h-20 mb-4" />
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              Giao dịch đã bị hủy
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Bạn đã hủy quá trình thanh toán. Vui lòng thử lại sau.
+            </p>
+            <Button
+              className="w-full bg-gray-500 hover:bg-gray-600 text-white"
+              onClick={() => navigate("/")}
+            >
+              Quay lại trang chủ
+            </Button>
+          </>
+        ) : (
+          <>
+            <Loader2 className="animate-spin text-yellow-500 mx-auto w-16 h-16 mb-4" />
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              Đang xử lý thanh toán...
+            </h2>
+            <p className="text-gray-600">
+              Vui lòng chờ vài giây để hoàn tất giao dịch.
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }

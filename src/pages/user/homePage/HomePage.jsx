@@ -15,27 +15,12 @@ function HomePage() {
 
   return (
     <div className="min-h-screen">
-
       <div className="fixed bottom-10 right-4 md:right-6 z-50 flex flex-col items-end gap-3 group">
-        
-
-        <button
-          onClick={() => setOpen(!open)}
-          className="bg-black text-white rounded-full p-3 cursor-pointer shadow-xl 
-                     hover:bg-gray-700 transition-all duration-200 active:scale-95"
-          aria-expanded={open}
-          aria-label={open ? "Đóng menu tiện ích" : "Mở menu tiện ích"}
-        >
-
-          {open ? <ChevronRight size={20} /> : <ChevronLeft size={20} />} 
-        </button>
-
-
         <div
-          className={`flex flex-col items-end gap-3 transition-all duration-300 ease-in-out origin-right
+          className={`flex flex-col absolute bottom-30 items-end gap-3 transition-all duration-300 ease-in-out origin-right
             ${
-              open 
-                ? "translate-x-0 opacity-100 visible" 
+              open
+                ? "translate-x-0 opacity-100 visible"
                 : "translate-x-[150%] opacity-0 invisible"
             }
           `}
@@ -62,12 +47,21 @@ function HomePage() {
                        hover:bg-yellow-500 hover:text-black transition-all duration-300 shadow-lg 
                        active:scale-95 min-w-[150px]"
           >
-            <AddCircleOutlineIcon className="w-5 h-5"/>
+            <AddCircleOutlineIcon className="w-5 h-5" />
             <p>Thêm dự án</p>
           </div>
         </div>
+        <button
+          onClick={() => setOpen(!open)}
+          className="bg-black text-white rounded-full p-3 cursor-pointer shadow-xl 
+                     hover:bg-gray-700 transition-all duration-200 active:scale-95 absolute bottom-15"
+          aria-expanded={open}
+          aria-label={open ? "Đóng menu tiện ích" : "Mở menu tiện ích"}
+        >
+          {open ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+        </button>
       </div>
-      
+
       <section className="mt-16 md:mt-[8rem] px-4" id="home">
         <Home />
       </section>

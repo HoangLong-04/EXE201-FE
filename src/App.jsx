@@ -31,17 +31,22 @@ function App() {
           <Route path="/" element={<Navigate to="/user/home" />} />
           {/* Public */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/success-payment" element={<SuccessPayment />} />
+          <Route path="/payment-success" element={<SuccessPayment />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          {/* ✅ Khi PayOS redirect đến /payment/cancel thì tự về trang chủ */}
+          <Route path="/payment/cancel" element={<Navigate to="/" replace />} />
 
           {/* Private user */}
           <Route path="/" element={<UserLayout />}>
-          <Route path="/donate-web" element={<DonateWeb />} />
+            <Route path="/donate-web" element={<DonateWeb />} />
             <Route path="user/home" element={<HomePage />} />
             <Route path="payment-form" element={<PaymentForm />} />
             <Route path="user/add-project" element={<AddProject />} />
-            <Route path="user/project-detail/:title" element={<ProjectDetail />} />
+            <Route
+              path="user/project-detail/:title"
+              element={<ProjectDetail />}
+            />
           </Route>
           <Route path="/" element={<ProfileLayout />}>
             <Route path="profile/info" element={<InfoPage />} />

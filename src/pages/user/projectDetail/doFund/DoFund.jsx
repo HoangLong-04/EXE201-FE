@@ -25,8 +25,8 @@ function DoFund({
   tiers,
   getProjectDetail,
 }) {
-  const [clientSecret, setClientSecret] = useState(null);
-  const [publishableKey, setPublishableKey] = useState(null);
+  // const [clientSecret, setClientSecret] = useState(null);
+  // const [publishableKey, setPublishableKey] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [amountDonate, setAmountDonate] = useState(0);
@@ -96,8 +96,14 @@ function DoFund({
       const res = await PrivateApi.donateProject(id, {
         amount: amountDonate,
       });
-      setClientSecret(res.data.clientSecret);
-      setPublishableKey(res.data.publishableKey);
+      if (res?.data?.paymentUrl) {
+        toast.success("Tạo yêu cầu thanh toán thành công!");
+        window.location.href = res.data.paymentUrl;
+      } else {
+        toast.error("Không tìm thấy liên kết thanh toán.");
+      }
+      // setClientSecret(res.data.clientSecret);
+      // setPublishableKey(res.data.publishableKey);
       toast.success("Tạo yêu cầu thanh toán thành công!");
     } catch (error) {
       console.error(error);
@@ -107,45 +113,45 @@ function DoFund({
     }
   };
 
-  if (clientSecret && publishableKey) {
-    const stripePromise = loadStripe(publishableKey);
-    return (
-      <div
-        className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
-        onClick={() => {
-          // Khi click ra ngoài => hủy form thanh toán
-          setClientSecret(null);
-          setPublishableKey(null);
-        }}
-      >
-        <div
-          className="bg-white/50 rounded-2xl shadow-xl max-w-md w-full p-6 relative"
-          onClick={(e) => e.stopPropagation()} // Ngăn sự kiện click lan ra ngoài
-        >
-          <button
-            onClick={() => {
-              setClientSecret(null);
-              setPublishableKey(null);
-            }}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition"
-          >
-            ✕
-          </button>
+  // if (clientSecret && publishableKey) {
+  //   const stripePromise = loadStripe(publishableKey);
+  //   return (
+  //     <div
+  //       className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+  //       onClick={() => {
+  //         // Khi click ra ngoài => hủy form thanh toán
+  //         setClientSecret(null);
+  //         setPublishableKey(null);
+  //       }}
+  //     >
+  //       <div
+  //         className="bg-white/50 rounded-2xl shadow-xl max-w-md w-full p-6 relative"
+  //         onClick={(e) => e.stopPropagation()} // Ngăn sự kiện click lan ra ngoài
+  //       >
+  //         <button
+  //           onClick={() => {
+  //             setClientSecret(null);
+  //             setPublishableKey(null);
+  //           }}
+  //           className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition"
+  //         >
+  //           ✕
+  //         </button>
 
-          <Elements stripe={stripePromise}>
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Thanh toán</h2>
-              <p className="text-sm text-gray-500">
-                Nhập thông tin thẻ để hoàn tất ủng hộ
-              </p>
-            </div>
+  //         <Elements stripe={stripePromise}>
+  //           <div className="text-center mb-6">
+  //             <h2 className="text-2xl font-bold text-gray-800">Thanh toán</h2>
+  //             <p className="text-sm text-gray-500">
+  //               Nhập thông tin thẻ để hoàn tất ủng hộ
+  //             </p>
+  //           </div>
 
-            <PaymentForm clientSecret={clientSecret} />
-          </Elements>
-        </div>
-      </div>
-    );
-  }
+  //           <PaymentForm clientSecret={clientSecret} />
+  //         </Elements>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="w-full md:w-[350px] bg-white rounded-2xl shadow-md p-6 ">
@@ -279,7 +285,7 @@ function DoFund({
                 value={amountDonate}
                 onChange={(e) => setAmountDonate(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 outline-none"
-                min="1"
+                min={10000}
               />
             </div>
           </form>

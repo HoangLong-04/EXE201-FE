@@ -13,8 +13,8 @@ function DonateWeb() {
     message: "",
   });
 
-  const [clientSecret, setClientSecret] = useState(null);
-  const [publishableKey, setPublishableKey] = useState(null);
+  // const [clientSecret, setClientSecret] = useState(null);
+  // const [publishableKey, setPublishableKey] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -58,8 +58,14 @@ function DonateWeb() {
     setLoading(true);
     try {
       const res = await PrivateApi.donateForWeb(form);
-      setClientSecret(res.data.clientSecret);
-      setPublishableKey(res.data.publishableKey);
+      if (res?.data?.paymentUrl) {
+        toast.success("Tạo yêu cầu thanh toán thành công!");
+        window.location.href = res.data.paymentUrl;
+      } else {
+        toast.error("Không tìm thấy liên kết thanh toán.");
+      }
+      // setClientSecret(res.data.clientSecret);
+      // setPublishableKey(res.data.publishableKey);
       toast.success("Tạo yêu cầu thanh toán thành công!");
     } catch (err) {
       console.error(err);
@@ -69,22 +75,22 @@ function DonateWeb() {
     }
   };
 
-  if (clientSecret && publishableKey) {
-    const stripePromise = loadStripe(publishableKey);
-    return (
-      <div className="flex items-center justify-center min-h-[80vh] bg-gray-50">
-        <Elements stripe={stripePromise}>
-          <div className="max-w-xl w-full mx-auto p-4 md:p-8 bg-white rounded-xl shadow-2xl border border-gray-100">
-            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-              Hoàn tất thanh toán
-            </h2>
-            {/* Truyền các thông tin cần thiết vào PaymentForm */}
-            <PaymentForm clientSecret={clientSecret} form={form} />
-          </div>
-        </Elements>
-      </div>
-    );
-  }
+  // if (clientSecret && publishableKey) {
+  //   const stripePromise = loadStripe(publishableKey);
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[80vh] bg-gray-50">
+  //       <Elements stripe={stripePromise}>
+  //         <div className="max-w-xl w-full mx-auto p-4 md:p-8 bg-white rounded-xl shadow-2xl border border-gray-100">
+  //           <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+  //             Hoàn tất thanh toán
+  //           </h2>
+  //           {/* Truyền các thông tin cần thiết vào PaymentForm */}
+  //           <PaymentForm clientSecret={clientSecret} form={form} />
+  //         </div>
+  //       </Elements>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex justify-center pt-12 pb-20 min-h-screen bg-gray-50">

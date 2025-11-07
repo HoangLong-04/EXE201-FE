@@ -62,7 +62,7 @@ privateApi.interceptors.response.use(
 privateApi.interceptors.request.use(
   (config) => {
     try {
-      const rawUser = sessionStorage.getItem("user");
+      const rawUser = localStorage.getItem("user");
       if (rawUser) {
         const user = JSON.parse(rawUser);
         if (user?.token) {
