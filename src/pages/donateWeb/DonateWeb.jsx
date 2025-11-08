@@ -50,8 +50,8 @@ function DonateWeb() {
 
   const handleDonate = async (e) => {
     e.preventDefault();
-    if (!form.amount || form.amount < 1000) {
-      toast.error("Vui lòng nhập số tiền ủng hộ hợp lệ (tối thiểu 1,000 VND).");
+    if (!form.amount || form.amount < 10000) {
+      toast.error("Vui lòng nhập số tiền ủng hộ hợp lệ (tối thiểu 10,000 VND).");
       return;
     }
 
@@ -118,7 +118,7 @@ function DonateWeb() {
                          text-gray-900 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all 
                          text-lg font-mono"
               placeholder="Tối thiểu 1000 VND"
-              min="1000"
+              min="10000"
               required
             />
           </div>
