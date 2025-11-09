@@ -20,6 +20,7 @@ import SuccessPayment from "./pages/successPayment/SuccessPayment";
 import PaymentForm from "./components/paymentForm/PaymentForm";
 import WebDonator from "./pages/admin/webDonator/WebDonator";
 import TawkMessenger from "./components/TawkMessenger/TawkMessenger";
+import RedirectHome from "./components/redirectHome/RedirectHome";
 
 function App() {
   return (
@@ -34,8 +35,8 @@ function App() {
           <Route path="/payment-success" element={<SuccessPayment />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          {/* ✅ Khi PayOS redirect đến /payment/cancel thì tự về trang chủ */}
-          <Route path="/payment/cancel" element={<Navigate to="https://zentive.vercel.app/" replace />} />
+          {/* Khi PayOS redirect đến /payment/cancel thì tự về trang chủ Deploy/Local */}
+          <Route path="/payment/cancel" element={<RedirectHome />} />
           {/* <Route path="/payment/cancel" element={<Navigate to="/" replace />} /> */}
 
           {/* Private user */}
