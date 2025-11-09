@@ -35,7 +35,8 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           {/* ✅ Khi PayOS redirect đến /payment/cancel thì tự về trang chủ */}
-          <Route path="/payment/cancel" element={<Navigate to="/" replace />} />
+          <Route path="/payment/cancel" element={<Navigate to="https://zentive.vercel.app/" replace />} />
+          {/* <Route path="/payment/cancel" element={<Navigate to="/" replace />} /> */}
 
           {/* Private user */}
           <Route path="/" element={<UserLayout />}>

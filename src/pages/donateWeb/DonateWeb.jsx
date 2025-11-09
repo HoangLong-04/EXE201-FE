@@ -117,7 +117,7 @@ function DonateWeb() {
               className="w-full border border-green-200 rounded-xl px-4 py-3 outline-none bg-white 
                          text-gray-900 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all 
                          text-lg font-mono"
-              placeholder="Tối thiểu 1000 VND"
+              placeholder="Tối thiểu 10.000 VND"
               min="10000"
               required
             />
