@@ -35,9 +35,6 @@ function App() {
           <Route path="/payment-success" element={<SuccessPayment />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          {/* Khi PayOS redirect đến /payment/cancel thì tự về trang chủ Deploy/Local */}
-          <Route path="/payment/cancel" element={<RedirectHome />} />
-          {/* <Route path="/payment/cancel" element={<Navigate to="/" replace />} /> */}
 
           {/* Private user */}
           <Route path="/" element={<UserLayout />}>

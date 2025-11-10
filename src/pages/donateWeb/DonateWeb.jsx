@@ -165,7 +165,7 @@ function DonateWeb() {
             className={`w-full flex justify-center items-center text-white font-bold py-3 rounded-xl 
                         transition-all duration-300 transform text-lg
                         ${
-                          loading || !form.amount || form.amount < 1000
+                          loading || !form.amount || form.amount < 10000
                             ? "bg-green-400 cursor-not-allowed opacity-80"
                             : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 active:scale-[0.98] shadow-lg hover:shadow-xl cursor-pointer"
                         }`}
