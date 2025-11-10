@@ -161,7 +161,7 @@ function DonateWeb() {
 
           <button
             type="submit"
-            disabled={loading || !form.amount || form.amount < 1000}
+            disabled={loading || !form.amount || form.amount < 10000}
             className={`w-full flex justify-center items-center text-white font-bold py-3 rounded-xl 
                         transition-all duration-300 transform text-lg
                         ${
