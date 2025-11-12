@@ -8,7 +8,9 @@ function DonatorTable({data, currentPage, totalPages, onPageChange, onApprove, o
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-100 text-gray-700">
-            <th className="py-3 px-4 border-b">Id</th>
+            <th className="py-3 px-4 border-b">Name</th>
+            <th className="py-3 px-4 border-b">Email</th>
+            {/* <th className="py-3 px-4 border-b">Id</th> */}
             <th className="py-3 px-4 border-b">Số tiền</th>
             <th className="py-3 px-4 border-b">Ngày tạo</th>
             <th className="py-3 px-4 border-b">Tin nhắn</th>
@@ -22,7 +24,9 @@ function DonatorTable({data, currentPage, totalPages, onPageChange, onApprove, o
                 key={p.id}
                 className="hover:bg-gray-50 transition-colors duration-150 border-b"
               >
-                <td className="py-3 px-4">{p.id}</td>
+                <td className="py-3 px-4">{p.donor ? p.donor?.fullName : 'Ản danh'}</td>
+                <td className="py-3 px-4">{p.donor ? p.donor?.email : 'Ản danh'}</td>
+                {/* <td className="py-3 px-4">{p.id}</td> */}
                 <td className="py-3 px-4">{(p.amount).toLocaleString("vi-VN")} đ</td>
                 <td className="py-3 px-4">{new Date (p.donationDate).toLocaleDateString("vi-VN")}</td>
                 <td className="py-3 px-4">{p.message}</td>

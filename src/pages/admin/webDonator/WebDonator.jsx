@@ -5,15 +5,17 @@ import DonatorTable from "../../../components/paginationTable/DonatorTable";
 function WebDonator() {
   const [donator, setDonator] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchDonator = async () => {
       try {
         const response = await PrivateApi.getWebDonator({ page, pageSize });
-        setDonator(response.data.items);
-        setTotalPages(response.data.totalPages);
+        const data = response.data;
+        const paidPaymnent = data.items.filter((item) => item.status === "Paid");
+        setDonator(paidPaymnent);
+        setTotalPages(data.totalPages);
       } catch (error) {
         console.log(error);
       }

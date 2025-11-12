@@ -18,7 +18,7 @@ import { X } from "lucide-react";
 function ProjectInfo({ img, desciption, title, summary, id, status }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ file: "", type: "video", sortOrder: 0 });
+  const [form, setForm] = useState({ file: "", type: "", sortOrder: 0 });
   const [media, setMedia] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("");
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -40,7 +40,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
     setOpen(false);
     setForm({ file: "", type: "", sortOrder: 0 });
     console.log(form.sortOrder);
-    
+
     setPreviewUrl("");
   };
 
@@ -62,6 +62,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
 
     if (!form.file || !form.type) {
       toast.error("Thêm đầy đủ thông tin");
+      setLoading(false);
       return;
     }
     try {
@@ -251,6 +252,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
                 name=""
                 id=""
               >
+                <option>Chọn loại file</option>
                 <option value="video">Video</option>
                 <option value="image">Ảnh</option>
               </select>
