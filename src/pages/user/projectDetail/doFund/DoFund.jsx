@@ -287,13 +287,21 @@ function DoFund({
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-pink-400 outline-none"
                 min={10000}
               />
+              {amountDonate === 0 && (
+                <span className="italic text-gray-500">
+                  * Ủng hộ thấp nhất 10.000đ
+                </span>
+              )}
             </div>
           </form>
         </DialogContent>
 
         <DialogActions className="px-6 py-3 border-t bg-gray-50">
           <Button
-            onClick={() => setDonate(false)}
+            onClick={() => {
+              setDonate(false);
+              setAmountDonate(0);
+            }}
             variant="outlined"
             color="inherit"
             className="rounded-full px-5"
@@ -301,6 +309,7 @@ function DoFund({
             Hủy
           </Button>
           <Button
+            disabled={amountDonate === 0}
             type="submit"
             form="subscription-form"
             variant="contained"

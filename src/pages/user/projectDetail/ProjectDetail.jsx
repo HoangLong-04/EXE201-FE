@@ -20,6 +20,10 @@ function ProjectDetail() {
   const { title } = useParams();
   const { user } = useAuth();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [title]);
+
   const getProjectDetail = async () => {
     try {
       const resProject = await PrivateApi.getProjectSlug(title);
@@ -61,9 +65,8 @@ function ProjectDetail() {
       <div className="bg-gray-50">
         <section className="flex flex-col md:flex-row gap-6 p-8 min-h-screen">
           <ProjectInfo
-          id={project.id}
-          status={project.status}
-          
+            id={project.id}
+            status={project.status}
             title={project.title}
             desciption={project.description}
             summary={project.summary}

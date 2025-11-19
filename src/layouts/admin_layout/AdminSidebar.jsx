@@ -12,7 +12,7 @@ function AdminSidebar() {
     { path: "/admin/dashboard", label: "Tổng quan" },
     { path: "/admin/post", label: "Bài đăng" },
     { path: "/admin/web-donator", label: "Người ủng hộ" },
-    // { path: "/admin/user", label: "Người dùng" },
+    { path: "/admin/user-management", label: "Người dùng" },
   ];
 
   const handleLogout = () => {
@@ -42,7 +42,10 @@ function AdminSidebar() {
             {item.label}
           </Link>
         ))}
-        <div onClick={handleLogout} className="hover:underline hover:text-blue-500 transition cursor-pointer absolute top-[80%] flex items-center gap-2">
+        <div
+          onClick={handleLogout}
+          className="hover:underline hover:text-blue-500 transition cursor-pointer absolute top-[80%] flex items-center justify-center gap-2 left-[20%]"
+        >
           <span>
             <PowerSettingsNewIcon />
           </span>

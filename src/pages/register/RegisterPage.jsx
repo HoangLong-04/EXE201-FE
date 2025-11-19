@@ -29,6 +29,7 @@ function RegisterPage() {
       !form.school
     ) {
       toast.error("Hãy nhập đầy đủ thông tin");
+      setLoading(false)
       return;
     }
     setLoading(true);
@@ -45,6 +46,7 @@ function RegisterPage() {
       });
 
       toast.success("Đăng ký thành công");
+      navigate('/login')
     } catch (error) {
       toast.error("Đăng ký thất bại");
       console.log(error);

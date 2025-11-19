@@ -71,7 +71,7 @@ function Navbar() {
               offset={-70}
               duration={500}
               onSetActive={() => setActive(item.id)}
-              className={`cursor-pointer px-4 py-2 rounded-full transition-all duration-300 ease-in-out transform text-sm
+              className={`cursor-pointer px-4 py-2 rounded-full transition-all duration-300 ease-in-out transform text-lg
                 ${
                   active === item.id
                     ? "bg-red-500 text-white shadow-md"
@@ -88,8 +88,8 @@ function Navbar() {
       <div className="flex items-center gap-4">
         {user ? (
           /* Đã đăng nhập */
-          <div className="flex items-center gap-2">
-            <span
+          <div className="flex items-center gap-5">
+            <button title="Hồ sơ cá nhân"
               onClick={() => navigate("/profile/info")}
               className="relative bg-red-500 h-10 w-10 rounded-full flex justify-center items-center cursor-pointer overflow-hidden group flex-shrink-0"
             >
@@ -99,7 +99,7 @@ function Navbar() {
                   translate-x-[-100%] group-hover:translate-x-[100%] 
                   transition-transform duration-300 ease-in-out"
               ></span>
-            </span>
+            </button>
 
             <span
               onClick={handleLogout}

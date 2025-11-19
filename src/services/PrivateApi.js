@@ -25,9 +25,19 @@ const PrivateApi = {
   addMedia: (id, data) =>
     apiConfig.privateApi.post(`api/Project/${id}/media`, data),
   getMedia: (id) => apiConfig.privateApi.get(`api/Project/${id}/media`),
+
+  changeUserInfo: (data) => apiConfig.privateApi.patch("api/Accounts/me", data),
+  getUser4User: () => apiConfig.privateApi.get('api/Accounts/me'),
+
+  //Admin
   getUserCount: () => apiConfig.privateApi.get("api/Accounts/count"),
   getRevenue: () => apiConfig.privateApi.get("api/admin/donations/revenue"),
   getDetailProjectAdmin: (id) => apiConfig.privateApi.get(`api/Project/${id}`),
+  getUserListAdmin: (params) =>
+    apiConfig.privateApi.get("api/Accounts", { params }),
+  getUserDetail: (id) => apiConfig.privateApi.get(`api/Accounts/${id}`),
+  changeUserStatus: (id) =>
+    apiConfig.privateApi.patch(`api/Accounts/${id}/status`),
 };
 
 export default PrivateApi;

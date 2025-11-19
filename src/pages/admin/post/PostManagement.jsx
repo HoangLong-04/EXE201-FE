@@ -4,10 +4,10 @@ import Table from "../../../components/paginationTable/Table";
 import { toast } from "react-toastify";
 
 function PostManagement() {
-  const [page, setPage] = useState(1);
+  const [Page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [project, setProject] = useState([]);
-  const [pageSize] = useState(10);
+  const [PageSize] = useState(10);
   const [loading, setLoading] = useState(false)
 
   const [selectedId, setSelectedId] = useState(null);
@@ -18,7 +18,7 @@ function PostManagement() {
 
   const getPendingProject = async () => {
     try {
-      const response = await PrivateApi.getPendingProject({ page, pageSize });
+      const response = await PrivateApi.getPendingProject({ Page, PageSize });
       setProject(response.data.projects);
       setTotalPage(response.data.totalPages);
     } catch (error) {
@@ -27,7 +27,7 @@ function PostManagement() {
   };
   useEffect(() => {
     getPendingProject();
-  }, [page, pageSize]);
+  }, [Page, PageSize]);
 
   const handleApprove = async (id) => {
     setLoading(true)
@@ -78,7 +78,7 @@ function PostManagement() {
     <div className="p-8">
       <Table
         projects={project}
-        currentPage={page}
+        currentPage={Page}
         totalPages={totalPage}
         onPageChange={setPage}
         onApprove={handleApprove}

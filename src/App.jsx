@@ -21,6 +21,7 @@ import PaymentForm from "./components/paymentForm/PaymentForm";
 import WebDonator from "./pages/admin/webDonator/WebDonator";
 import TawkMessenger from "./components/TawkMessenger/TawkMessenger";
 import RedirectHome from "./components/redirectHome/RedirectHome";
+import UserManagement from "./pages/admin/userManagement/UserManagement";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="admin/dashboard" element={<Dashboard />} />
             <Route path="admin/post" element={<PostManagement />} />
             <Route path="admin/web-donator" element={<WebDonator />} />
+            <Route path="admin/user-management" element={<UserManagement />} />
           </Route>
         </Routes>
       </BrowserRouter>
