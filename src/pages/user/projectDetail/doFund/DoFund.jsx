@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useAuth } from "../../../../hooks/useAuth";
 import PrivateApi from "../../../../services/PrivateApi";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -28,6 +28,7 @@ function DoFund({
   // const [clientSecret, setClientSecret] = useState(null);
   // const [publishableKey, setPublishableKey] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
   const [open, setOpen] = useState(false);
   const [amountDonate, setAmountDonate] = useState(0);
   const [donate, setDonate] = useState(false);
@@ -38,7 +39,20 @@ function DoFund({
     quantity: "",
     deliveryDate: "",
   });
-  const { user } = useAuth();
+  // const { user } = useAuth();
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await PrivateApi.getUser4User();
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -157,7 +171,7 @@ function DoFund({
     <div className="w-full md:w-[350px] bg-white rounded-2xl shadow-md p-6 ">
       <div className="flex flex-col items-center mb-10">
         <h2 className="text-xl font-semibold mb-4">
-          {user.userProfile.fullName === creatorName
+          {user?.fullName === creatorName
             ? "Đây là dự án của bạn"
             : "Ủng hộ dự án"}
         </h2>
@@ -179,7 +193,7 @@ function DoFund({
             {Math.floor((currentAmount / goal) * 100, 100)}%
           </div>
         </div>
-        {user.userProfile.fullName === creatorName ? null : (
+        {user?.fullName === creatorName ? null : (
           <button
             onClick={() => setDonate(true)}
             className="relative overflow-hidden group bg-green-600 cursor-pointer text-white px-6 py-2 rounded-full text-lg font-semibold transition hover:bg-green-700"
@@ -203,7 +217,7 @@ function DoFund({
         <div>{dayjs(endAt).format("DD/MM/YYYY")}</div>
         <div className="font-semibold">Số người đã quyên góp:</div>
         <div>{backer}</div>
-        {user.userProfile.fullName === creatorName ? (
+        {user?.fullName === creatorName ? (
           <>
             <div className="font-semibold">Trạng thái:</div>
             <div>{status}</div>
@@ -211,8 +225,8 @@ function DoFund({
         ) : null}
       </div>
 
-      {status === "Published" || status === "Submitted" ? null : user
-          .userProfile.fullName === creatorName ? (
+      {status === "Published" ||
+      status === "Submitted" ? null : user.fullName === creatorName ? (
         <div className="flex justify-center">
           {tiers?.length === 0 ? (
             <div className="flex flex-col">

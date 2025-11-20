@@ -12,17 +12,27 @@ import { toast } from "react-toastify";
 function ProjectDetail() {
   const [project, setProject] = useState({});
   const [tiers, setTiers] = useState([]);
+  const [user, setUser] = useState({});
   const [pledge, setPledge] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(5);
   const [status, setStatus] = useState("Paid");
   const [totalPage, setTotalPage] = useState(1);
   const { title } = useParams();
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [title]);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await PrivateApi.getUser4User();
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getProjectDetail = async () => {
     try {
@@ -46,6 +56,7 @@ function ProjectDetail() {
 
   useEffect(() => {
     getProjectDetail();
+    fetchUserInfo();
   }, [title, page, pageSize, status]);
 
   // const handleGetPledge = async (id) => {
@@ -100,7 +111,7 @@ function ProjectDetail() {
             />
           ))}
         </section>
-        {user?.userProfile?.fullName === project.creatorName ? (
+        {user?.fullName === project.creatorName ? (
           <section>
             <div className="flex justify-between items-center mb-3">
               <div>
@@ -130,7 +141,7 @@ function ProjectDetail() {
           </section>
         ) : null}
       </div>
-      {user.userProfile.fullName === project.creatorName ? null : (
+      {user?.fullName === project.creatorName ? null : (
         <section className="p-8">
           <h1 className="text-3xl text-center font-semibold my-10">
             Những dự án khác

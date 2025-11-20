@@ -28,7 +28,14 @@ function InfoPage() {
   const handleChangeUserInfo = async () => {
     const { email, role, createdAt, id, isActive, ...senData } = form;
     try {
-      await PrivateApi.changeUserInfo(senData);
+      const res = await PrivateApi.changeUserInfo(senData);
+      const { isActive, createdAt, ...cleanData } = res.data;
+      const user = JSON.parse(localStorage.getItem("user"));
+      user.userProfile = {
+        ...user.userProfile,
+        ...cleanData,
+      };
+      localStorage.setItem("user", JSON.stringify(user));
       fetchUserInfo();
       toast.success("Đổi thành công");
     } catch (error) {
