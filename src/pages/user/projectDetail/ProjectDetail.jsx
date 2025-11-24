@@ -8,6 +8,9 @@ import TierReward from "../../../components/tierReward/TierReward";
 import { useAuth } from "../../../hooks/useAuth";
 import PledgeTable from "./pledgeTable/PledgeTable";
 import { toast } from "react-toastify";
+import ConfirmModal from "../../../components/user/confirmModal/ConfirmModal";
+import UpdateProjectModal from "./updateProjectModal/UpdateProjectModal";
+import { uploadImageToCloudinary } from "../../../utils/uploadImage";
 
 function ProjectDetail() {
   const [project, setProject] = useState({});
@@ -19,6 +22,9 @@ function ProjectDetail() {
   const [status, setStatus] = useState("Paid");
   const [totalPage, setTotalPage] = useState(1);
   const { title } = useParams();
+  const [confirm, setConfirm] = useState({ tier: false });
+  const [selectedId, setSelectedId] = useState("");
+  const [open, setOpen] = useState(false);
   // const { user } = useAuth();
 
   useEffect(() => {
@@ -54,6 +60,28 @@ function ProjectDetail() {
     }
   };
 
+  const handleUpdateProject = async (formData) => {
+    try {
+      await PrivateApi.updateProject(project.id, formData);
+      toast.success("Cập nhật thành công!");
+      setOpen(false);
+      getProjectDetail();
+    } catch (err) {
+      toast.error("Lỗi cập nhật");
+    }
+  };
+
+  const handleDeleteTier = async () => {
+    try {
+      await PrivateApi.deleteTier(project.id, selectedId);
+      toast.success("Xóa thành công");
+      setConfirm((p) => ({ ...p, tier: false }));
+      getProjectDetail();
+    } catch (error) {
+      toast.error("Lỗi");
+    }
+  };
+
   useEffect(() => {
     getProjectDetail();
     fetchUserInfo();
@@ -74,6 +102,21 @@ function ProjectDetail() {
   return (
     <div>
       <div className="bg-gray-50">
+        {user?.fullName === project.creatorName &&
+          (project.status === "Draft" || project.status === "Rejected") && (
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setOpen(true);
+                  console.log(project);
+                }}
+                className="bg-amber-300 py-2 px-4 font-medium cursor-pointer rounded-bl-2xl flex justify-center items-center hover:shadow-lg transition duration-300"
+              >
+                Chỉnh sửa dự án
+              </button>
+            </div>
+          )}
+
         <section className="flex flex-col md:flex-row gap-6 p-8 min-h-screen">
           <ProjectInfo
             id={project.id}
@@ -82,6 +125,8 @@ function ProjectDetail() {
             desciption={project.description}
             summary={project.summary}
             img={project.mediaCoverUrl}
+            project={project}
+            user={user}
           />
           <DoFund
             currentAmount={project.currentAmount}
@@ -108,9 +153,26 @@ function ProjectDetail() {
               amount={t.amount}
               quantity={t.quantity}
               creatorName={project.creatorName}
+              setConfirm={setConfirm}
+              setSelectedId={setSelectedId}
+              user={user}
+              project={project}
             />
           ))}
+          <ConfirmModal
+            message={"Bạn có chắc muốn xóa tier này?"}
+            onCancel={() => setConfirm((p) => ({ ...p, tier: false }))}
+            onConfirm={handleDeleteTier}
+            open={confirm.tier}
+            title={"Xác nhận xóa"}
+          />
         </section>
+        <UpdateProjectModal
+          onClose={() => setOpen(false)}
+          open={open}
+          project={project}
+          onSubmit={handleUpdateProject}
+        />
         {user?.fullName === project.creatorName ? (
           <section>
             <div className="flex justify-between items-center mb-3">

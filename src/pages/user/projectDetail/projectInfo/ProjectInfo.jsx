@@ -13,15 +13,27 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
+import ConfirmModal from "../../../../components/user/confirmModal/ConfirmModal";
 
-function ProjectInfo({ img, desciption, title, summary, id, status }) {
+function ProjectInfo({
+  img,
+  desciption,
+  title,
+  summary,
+  id,
+  status,
+  user,
+  project,
+}) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ file: "", type: "", sortOrder: 0 });
   const [media, setMedia] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("");
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedId, setSelectedId] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState({ media: false });
 
   const fetchMedia = async () => {
     try {
@@ -35,6 +47,17 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
   useEffect(() => {
     fetchMedia();
   }, [id]);
+
+  const handleDeleteMedia = async () => {
+    try {
+      await PrivateApi.deleteMedia(id, selectedId);
+      toast.success("Xóa thành công");
+      fetchMedia(id);
+      setConfirmDelete((p) => ({ ...p, media: false }));
+    } catch (error) {
+      toast.error("Thất bại");
+    }
+  };
 
   const handleResetField = () => {
     setOpen(false);
@@ -115,7 +138,7 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
                     {m.type === "video" ? (
                       <video
                         src={m.url}
-                        controls={true}
+                        controls
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -126,14 +149,47 @@ function ProjectInfo({ img, desciption, title, summary, id, status }) {
                       />
                     )}
 
-                    {/* Overlay khi hover */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300"></div>
+
+                    {user?.fullName === project.creatorName &&
+                      (project.status === "Draft" ||
+                        project.status === "Rejected") && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedId(m.id);
+                            setConfirmDelete((prev) => ({
+                              ...prev,
+                              media: true,
+                            }));
+                          }}
+                          className="
+            absolute top-3 right-3 
+            bg-red-500 text-white p-2 rounded-full
+            opacity-0 group-hover:opacity-100
+            transition-all duration-300
+            hover:bg-red-600
+          "
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      )}
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
         )}
+
+        <ConfirmModal
+          message={"Bạn có chắc muốn xóa media này?"}
+          onCancel={() =>
+            setConfirmDelete((prev) => ({ ...prev, media: false }))
+          }
+          open={confirmDelete.media}
+          title={"Xác nhận xóa media"}
+          onConfirm={handleDeleteMedia}
+        />
 
         {/* Nút thêm ảnh/video */}
         {status === "Draft" && (

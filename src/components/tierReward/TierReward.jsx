@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../paymentForm/PaymentForm";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Trash2 } from "lucide-react";
+import ConfirmModal from "../user/confirmModal/ConfirmModal";
 
 function TierReward({
   title,
@@ -14,13 +16,17 @@ function TierReward({
   quantity,
   tierId,
   projectId,
-
   creatorName,
+  setConfirm,
+  setSelectedId,
+  user,
+  project,
 }) {
   // const [clientSecret, setClientSecret] = useState(null);
   // const [publishableKey, setPublishableKey] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
+  // const { user } = useAuth();
+
   const handleDonateTier = async () => {
     setLoading(true);
     try {
@@ -43,6 +49,7 @@ function TierReward({
       setLoading(false);
     }
   };
+
   // if (clientSecret && publishableKey) {
   //   const stripePromise = loadStripe(publishableKey);
 
@@ -87,7 +94,22 @@ function TierReward({
   return (
     <div className="border border-pink-200 rounded-2xl shadow-md p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 bg-white flex flex-col justify-between">
       <div>
-        <h3 className="text-xl font-semibold text-pink-600 mb-2">{title}</h3>
+        <div className="text-xl font-semibold text-pink-600 mb-2 flex justify-between">
+          <p>{title}</p>
+          {user?.fullName === project.creatorName &&
+            (project.status === "Draft" || project.status === "Rejected") && (
+              <button
+                onClick={() => {
+                  setSelectedId(tierId);
+                  setConfirm((prev) => ({ ...prev, tier: true }));
+                }}
+                title="Xóa tier"
+                className="hover:bg-red-500 hover:text-white transition rounded-full flex justify-center items-center h-10 w-10"
+              >
+                <Trash2 size={18} />
+              </button>
+            )}
+        </div>
         <p className="text-gray-700 text-sm mb-3">{description}</p>
 
         <div className="space-y-1 text-sm text-gray-600">
@@ -101,7 +123,7 @@ function TierReward({
         </div>
       </div>
 
-      {user.userProfile.fullName === creatorName ? null : (
+      {user?.fullName === creatorName ? null : (
         <button
           disabled={loading}
           onClick={handleDonateTier}

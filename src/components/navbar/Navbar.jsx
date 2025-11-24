@@ -6,6 +6,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth } from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 function Navbar() {
   const [active, setActive] = useState("home");
@@ -26,6 +27,7 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
+    toast.success("Đã đăng xuất");
     navigate("/user/home");
   };
 
@@ -89,7 +91,8 @@ function Navbar() {
         {user ? (
           /* Đã đăng nhập */
           <div className="flex items-center gap-5">
-            <button title="Hồ sơ cá nhân"
+            <button
+              title="Hồ sơ cá nhân"
               onClick={() => navigate("/profile/info")}
               className="relative bg-red-500 h-10 w-10 rounded-full flex justify-center items-center cursor-pointer overflow-hidden group flex-shrink-0"
             >

@@ -5,6 +5,7 @@ import PrivateApi from "../../../services/PrivateApi";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 function AddProject() {
   const [category, setCategory] = useState([]);
@@ -20,6 +21,7 @@ function AddProject() {
     imageFile: null,
   });
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -88,6 +90,7 @@ function AddProject() {
       });
 
       console.log("Tạo dự án thành công:", response);
+      navigate("/user/home");
       toast.success("Tạo dự án thành công!");
     } catch (error) {
       console.error("Lỗi:", error);
