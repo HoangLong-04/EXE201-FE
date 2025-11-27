@@ -24,8 +24,8 @@ function DonatorTable({data, currentPage, totalPages, onPageChange, onApprove, o
                 key={p.id}
                 className="hover:bg-gray-50 transition-colors duration-150 border-b"
               >
-                <td className="py-3 px-4">{p.donor ? p.donor?.fullName : 'Ản danh'}</td>
-                <td className="py-3 px-4">{p.donor ? p.donor?.email : 'Ản danh'}</td>
+                <td className="py-3 px-4">{p.donor ? p.donor?.fullName : 'Ẩn danh'}</td>
+                <td className="py-3 px-4">{p.donor ? p.donor?.email : 'Ẩn danh'}</td>
                 {/* <td className="py-3 px-4">{p.id}</td> */}
                 <td className="py-3 px-4">{(p.amount).toLocaleString("vi-VN")} đ</td>
                 <td className="py-3 px-4">{new Date (p.donationDate).toLocaleDateString("vi-VN")}</td>
